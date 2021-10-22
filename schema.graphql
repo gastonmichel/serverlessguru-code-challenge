@@ -1,0 +1,30 @@
+type Book {
+  bookId: ID!
+  title: String!
+  description: String
+  author: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Query {
+  getBookById(bookId: ID!): Book!
+  listBooks(): [Book]
+}
+
+type Mutation {
+  createBook(newBook: BookInput!): Book!
+  deleteBook(bookId: ID!): Boolean!
+  updateBook(bookId: ID!, updatedBook: BookInput!): Book!
+}
+
+input BookInput {
+  title: String!
+  description: String
+  author: String!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
