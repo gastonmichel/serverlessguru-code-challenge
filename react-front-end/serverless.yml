@@ -1,0 +1,12 @@
+org: gastonmichel
+app: serverlessguru-code-challenge
+service: serverlessguru-code-challenge-frontend
+name: react-front-end
+component: website
+
+inputs:
+  src:
+    src: ./src
+    hook: npm run build
+    dist: ./dist
+  domain: code.gastonmichel.com.ar
