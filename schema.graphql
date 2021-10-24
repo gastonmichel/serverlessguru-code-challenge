@@ -8,20 +8,25 @@ type Book {
 }
 
 type Query {
-  getBookById(bookId: ID!): Book!
-  listBooks(): [Book]
+  getBookById(id: ID!): Book
+  listBooks(limit: Int!, nextToken: String): BooksPage
 }
 
-type Mutation {
-  createBook(newBook: BookInput!): Book!
-  deleteBook(bookId: ID!): Boolean!
-  updateBook(bookId: ID!, updatedBook: BookInput!): Book!
+type BooksPage {
+    books: [Book]
+    nextToken: String
 }
 
 input BookInput {
   title: String!
   description: String
   author: String!
+}
+
+type Mutation {
+  createBook(input: BookInput): Book
+  deleteBook(bookId: ID!): Boolean
+  updateBook(bookId: ID!, input: BookInput!): Book
 }
 
 schema {
