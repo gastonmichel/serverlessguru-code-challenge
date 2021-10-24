@@ -3,11 +3,6 @@ app: serverlessguru-code-challenge
 org: gastonmichel
 variablesResolutionMode: 20210326
 
-
-# custom:
-#   tableName: 'books-table-${stage}'
-#   apiName: 'books-api-${stage}'
-
 provider:
   name: aws
   stage: dev
@@ -32,34 +27,6 @@ functions:
   updateBook:
     handler: lambda.updateBook
     name: updateBook
-
-component: graphql
-name: graphql-api
-inputs:
-  src: ./
-  resolvers:
-    Query:
-      getBookById:                      
-        lambda: my-lambda
-        request: '{"version": "2017-02-28", "operation": "Invoke", "payload": $util.toJson($context)}'
-        response: '$util.toJson($context.result)'
-      listBooks:
-        lambda: listBooks
-        request: request.vtl
-        response: response.vtl
-    Mutation:
-      createBook:
-        lambda: createBook
-        request: request.vtl
-        response: response.vtl
-      deleteBook:
-        lambda: deleteBook
-        request: request.vtl
-        response: response.vtl
-      updateBook:
-        lambda: updateBook
-        request: request.vtl
-        response: response.vtl
 
 resources:
   Resources:
