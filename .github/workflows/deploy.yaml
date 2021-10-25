@@ -23,4 +23,4 @@ jobs:
     - name: serverless deploy
       uses: serverless/github-action@master
       with:
-        args: "deploy --config ${{ matrix.component }}/serverless.yaml --stage ${{ steps.vars.branch }}"
+        args: "deploy --config ${{ matrix.component }}/serverless.yaml --stage ${{ steps.vars.outputs.branch }}"
