@@ -2,6 +2,7 @@ app: serverlessguru-code-challenge
 org: gastonmichel
 name: appsync-api
 component: graphql
+service: serverlessguru-code-challenge-api
 
 variablesResolutionMode: 20210326
 
