@@ -27,7 +27,8 @@ def getBookById(event, context):
     return item['Item']
 
 def listBooks(event, context):
-    pass
+    response = table.scan()
+    return response['Items']
 
 def createBook(event, context):
     return putBook(
