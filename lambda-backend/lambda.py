@@ -27,8 +27,17 @@ def getBookById(event, context):
     return item['Item']
 
 def listBooks(event, context):
-    response = table.scan()
-    return response['Items']
+    payload = {}
+    if 'token' in event:
+        payload['ExclusiveStartKey'] = { 'bookId': event['token']}
+    if 'limit' in event:
+        payload['Limit'] = event['limit']
+    response = table.scan(**payload)
+    print(response)
+    return {
+        'books': response['Items'],
+        'nextToken': response['LastEvaluatedKey']['bookId'] if 'LastEvaluatedKey' in response else None,
+    }
 
 def createBook(event, context):
     return putBook(
