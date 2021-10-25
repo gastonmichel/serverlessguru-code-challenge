@@ -24,4 +24,4 @@ jobs:
     - name: serverless deploy
       uses: serverless/github-action@master
       with:
-        args: deploy --config ${{ matrix.component }}/serverless.yaml --stage $GITHUB_REF
+        args: deploy --config ${{ matrix.component }}/serverless.yaml --stage ${{ github.ref }}
