@@ -16,11 +16,12 @@ jobs:
       matrix:
         component: [lambda-backend,appsync-api,react-front-end]
     steps:
-    - name: Set branch name
+    - name: Set Stage from Branch
       id: vars
-      run: echo ::set-output name=branch::${GITHUB_REF#refs/*/}
+      run: echo ::set-output name=stage::${GITHUB_REF#refs/*/}
     - uses: actions/checkout@v2
+    - run: cd ${{ matrix.component }}
     - name: serverless deploy
       uses: serverless/github-action@master
       with:
-        args: "deploy --config ${{ matrix.component }}/serverless.yaml --stage ${{ steps.vars.outputs.branch }}"
+        args: "deploy --stage ${{ steps.vars.outputs.stage }}"
