@@ -8,6 +8,16 @@ table = boto3.resource('dynamodb').Table(
 )
 
 
+def putBook(bookId,title,author, description=''):
+    item = table.put_item(Item={
+            'bookId': bookId,
+            'title': title,
+            'author': author,
+            'descrription': description,
+            'updatedAt': dt.datetime.now().isoformat()
+        })
+    return item
+
 def getBookById(event, context):
     item = table.get_item(
         Key={
@@ -36,39 +46,9 @@ def deleteBook(event, context):
     return True
 
 def updateBook(event, context):
-    expressionAttributeValues = {
-            ':t': {'S': event['input']['title']},
-            ':a': {'S': event['input']['author']},
-            ':d': {'S': ''},
-            ':u': {'S': dt.datetime.now().isoformat()},
-        }
-    if 'description' in event['input']:
-        expressionAttributeValues[':d'] = {'S': event['input']['description']}
-    item = table.update_item(
-        ExpressionAttributeNames={
-            '#T': 'title',
-            '#A': 'author',
-            '#D': 'description',
-            '#U': 'updatedAt'
-        },
-        ExpressionAttributeValues=expressionAttributeValues,
-        Key={
-            'bookId': {
-                'S': event['bookId'],
-            }
-        },
-        ReturnValues='ALL_NEW',
-        UpdateExpression='SET #T = :t, #A = :a, #D = :d, #U = :u',
+    return putBook(
+        bookId=event['bookId'],
+        title=event['input']['title'],
+        author=event['input']['author'],
+        description=event['input'].get('description',''),
     )
-    return item
-
-def putBook(bookId,title,author, description=''):
-    item = {
-            'bookId': bookId,
-            'title': title,
-            'author': author,
-            'descrription': description,
-            'updatedAt': dt.datetime.now().isoformat()
-        }
-    item = table.put_item(Item=item)
-    return item
