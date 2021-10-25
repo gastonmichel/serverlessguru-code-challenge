@@ -4,6 +4,9 @@ service: serverlessguru-code-challenge-frontend
 name: react-front-end
 component: website
 
+provider:
+  name: aws
+  
 inputs:
   src:
     src: ./src

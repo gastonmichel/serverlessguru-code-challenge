@@ -1,14 +1,13 @@
-service: serverlessguru-code-challenge-api
 app: serverlessguru-code-challenge
 org: gastonmichel
+name: appsync-api
+component: graphql
+
 variablesResolutionMode: 20210326
 
 provider:
   name: aws
-  stage: dev
 
-component: graphql
-name: graphql-api
 inputs:
   src: ./
   resolvers:
