@@ -1,7 +1,10 @@
 service: serverlessguru-code-challenge-backend
 app: serverlessguru-code-challenge
 org: gastonmichel
-variablesResolutionMode: 20210326
+# variablesResolutionMode: 20210326
+
+custom:
+  tableName: 'books-table-${sls:stage}'
 
 provider:
   name: aws
@@ -9,6 +12,21 @@ provider:
   runtime: python3.9
   memorySize: 512
   lambdaHashingVersion: 20201221
+  environment:
+    TABLE_NAME: ${self:custom.tableName}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [ BookTable, Arn ]
 
 functions:
   getBookById:
@@ -30,14 +48,14 @@ functions:
 
 resources:
   Resources:
-    UsersTable:
+    BookTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
           - AttributeName: bookId
             AttributeType: S
-        BillingMode: PAY_PER_REQUEST
         KeySchema:
           - AttributeName: bookId
             KeyType: HASH
-        TableName: 'books-table-dev'
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.tableName}

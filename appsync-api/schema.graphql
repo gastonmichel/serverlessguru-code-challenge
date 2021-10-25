@@ -3,12 +3,11 @@ type Book {
   title: String!
   description: String
   author: String!
-  createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
 
 type Query {
-  getBookById(id: ID!): Book
+  getBookById(bookId: ID!): Book
   listBooks(limit: Int!, nextToken: String): BooksPage
 }
 

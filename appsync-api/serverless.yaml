@@ -1,4 +1,4 @@
-service: serverlessguru-code-challenge-backend
+service: serverlessguru-code-challenge-api
 app: serverlessguru-code-challenge
 org: gastonmichel
 variablesResolutionMode: 20210326
