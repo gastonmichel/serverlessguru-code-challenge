@@ -21,7 +21,7 @@ jobs:
       run: echo ::set-output name=stage::${GITHUB_REF#refs/*/}
     - name: Checkout
       uses: actions/checkout@v2
-    - name: serverless deploy --stage branch
+    - name: serverless deploy --stage ${{ steps.vars.outputs.stage }}
       uses: serverless/github-action@master
-      with:
-        args: deploy --config ${{ matrix.component }}/serverless.yaml --stage ${{ steps.vars.outputs.stage }}
+      run: serverless deploy --stage ${{ steps.vars.outputs.stage }}
+      working-directory: ${{ matrix.component }}
