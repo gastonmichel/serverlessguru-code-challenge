@@ -1,4 +1,4 @@
-name: Deploy master branch
+name: Serverless Deploy Stage
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - dev
 
 jobs:
-  deploy:
+  deploy-component:
     name: deploy
     runs-on: ubuntu-latest
     env:
@@ -19,9 +19,9 @@ jobs:
     - name: Set Stage from Branch
       id: vars
       run: echo ::set-output name=stage::${GITHUB_REF#refs/*/}
-    - uses: actions/checkout@v2
-    - run: cd ${{ matrix.component }}
-    - name: serverless deploy
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: serverless deploy --stage branch
       uses: serverless/github-action@master
       with:
-        args: "deploy --stage ${{ steps.vars.outputs.stage }}"
+        args: deploy --config ${{ matrix.component }}/serverless.yaml --stage ${{ steps.vars.outputs.stage }}

@@ -1,6 +1,6 @@
 app: serverlessguru-code-challenge
 org: gastonmichel
-name: appsync-api
+name: book-api-${sls:stage}
 component: graphql
 service: serverlessguru-code-challenge-api
 
@@ -14,23 +14,23 @@ inputs:
   resolvers:
     Query:
       getBookById:                      
-        lambda: getBookById
+        lambda: getBookById-${sls:stage}
         request: request.vtl
         response: response.vtl
       listBooks:
-        lambda: listBooks
+        lambda: listBooks-${sls:stage}
         request: request.vtl
         response: response.vtl
     Mutation:
       createBook:
-        lambda: createBook
+        lambda: createBook-${sls:stage}
         request: request.vtl
         response: response.vtl
       deleteBook:
-        lambda: deleteBook
+        lambda: deleteBook-${sls:stage}
         request: request.vtl
         response: response.vtl
       updateBook:
-        lambda: updateBook
+        lambda: updateBook-${sls:stage}
         request: request.vtl
         response: response.vtl
