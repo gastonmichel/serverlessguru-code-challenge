@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import imageHero from './images/hero.png';
 
+
+import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
+
 export default class App extends Component {
   constructor(props) {
     super(props);

@@ -1,11 +1,5 @@
-org: gastonmichel
-app: serverlessguru-code-challenge
-service: serverlessguru-code-challenge-frontend
 name: react-front-end
 component: website
-
-provider:
-  name: aws
 
 inputs:
   src:

@@ -1,0 +1,11 @@
+component: aws-lambda 
+name: delete-book
+
+inputs:
+  src: ./
+  name: ${name}-${stage}
+  description: Delete a book from the book table
+  memory: 512
+  env:
+    TABLE_NAME: ${output:books-table.name}
+  roleName: ${output:book-table-iam.name}

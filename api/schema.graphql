@@ -1,9 +1,9 @@
 type Book {
   bookId: ID!
   title: String!
-  description: String
+  description: String!
   author: String!
-  updatedAt: String!
+  updatedAt: AWSDateTime!
 }
 
 type Query {
@@ -18,14 +18,14 @@ type BooksPage {
 
 input BookInput {
   title: String!
-  description: String
+  description: String!
   author: String!
 }
 
 type Mutation {
-  createBook(input: BookInput): Book
+  createBook(input: BookInput): Boolean
   deleteBook(bookId: ID!): Boolean
-  updateBook(bookId: ID!, input: BookInput!): Book
+  updateBook(bookId: ID!, input: BookInput!): Boolean
 }
 
 schema {

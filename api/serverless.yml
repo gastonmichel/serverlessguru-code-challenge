@@ -1,8 +1,5 @@
-app: serverlessguru-code-challenge
-org: gastonmichel
-name: book-api-${sls:stage}
 component: graphql
-service: serverlessguru-code-challenge-api
+name: books-api
 
 variablesResolutionMode: 20210326
 
@@ -10,27 +7,28 @@ provider:
   name: aws
 
 inputs:
+  name: ${name}-${stage}
   src: ./
   resolvers:
     Query:
       getBookById:                      
-        lambda: getBookById-${sls:stage}
+        lambda: ${output:get-book.name}
         request: request.vtl
         response: response.vtl
       listBooks:
-        lambda: listBooks-${sls:stage}
+        lambda: ${output:list-books.name}
         request: request.vtl
         response: response.vtl
     Mutation:
       createBook:
-        lambda: createBook-${sls:stage}
+        lambda: ${output:create-book.name}
         request: request.vtl
         response: response.vtl
       deleteBook:
-        lambda: deleteBook-${sls:stage}
+        lambda: ${output:delete-book.name}
         request: request.vtl
         response: response.vtl
       updateBook:
-        lambda: updateBook-${sls:stage}
+        lambda: ${output:update-book.name}
         request: request.vtl
         response: response.vtl

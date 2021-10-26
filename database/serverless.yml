@@ -1,0 +1,11 @@
+component: aws-dynamodb
+name: books-table
+
+inputs:
+  name: ${name}-${stage}
+  attributeDefinitions:
+    - AttributeName: bookId
+      AttributeType: S
+  keySchema:
+    - AttributeName: bookId
+      KeyType: HASH
