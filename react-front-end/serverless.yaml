@@ -12,4 +12,4 @@ inputs:
     src: ./src
     hook: npm run build
     dist: ./dist
-  domain: ${sls:stage}.gastonmichel.com.ar
+  domain: ${stage}.gastonmichel.com.ar
