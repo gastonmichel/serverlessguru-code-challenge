@@ -1,9 +1,0 @@
-name: react-front-end
-component: website
-
-inputs:
-  src:
-    src: ./src
-    hook: npm run build
-    dist: ./dist
-  domain: ${stage}.gastonmichel.com.ar

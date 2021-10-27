@@ -21,4 +21,4 @@ jobs:
     - name: serverless deploy --stage ${{ steps.vars.outputs.stage }}
       uses: serverless/github-action@master
       with:
-        args: serverless deploy --stage ${{ steps.vars.outputs.stage }}
+        args: deploy --stage ${{ steps.vars.outputs.stage }}
