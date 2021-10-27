@@ -18,11 +18,11 @@ Every component is tied up through references using serverless component environ
 
 The multi stage deployment is satisfied by naming every component with a stage suffix. Therefore, multiple stages can coexist in the same AWS account and region. This is a choice made for credentials simplicity sake, but multiple accounts could be implemented in a later stage.
 
-The CI/CD engine chosen is Github Actions, that on any commit to the branches 'main' and 'dev' deploys the entire stack with the stage name equal to the branch name. The CI/CD is executed with personal https://app.serverless.com/ access key injected via repo environment secret. 
+The CI/CD engine chosen is Github Actions, that on any commit to the branches `main` and `dev` deploys the entire stack with the stage name equal to the branch name. The CI/CD is executed with personal https://app.serverless.com/ access key injected via repo environment secret. 
 
 ## Endpoint and authentication
 
-For every stage there is an endpoint that points to the graphql api:
+For every stage there is an endpoint that points to the graphql api.
 
 The main stage endpoint:
 
@@ -34,13 +34,13 @@ The dev stage endpoint:
 
 Custom domain is implemented in order to be resilient to destroy and redeploy the appsync api.
 
-The authentication is through api key, that is implemented adding a header 'x-api-key' in the request. The api-key is provided privately and expires in 7 days.
+The authentication is through api key, that is implemented adding a header `x-api-key` in the request. The api-key is provided privately and expires in 7 days.
 
 ## The CRUD functionality
 
 ### Create a book
 
-In order to Create a book execute the mutation:
+In order to create a book, execute the mutation:
 
     mutation CreateBook {
         createBook(
@@ -54,7 +54,7 @@ In order to Create a book execute the mutation:
 
 ### Read a book
 
-To get a book from the bookId execute the query: 
+To get a book by its bookId, execute the query: 
 
     query GetBookById {
     getBookById(bookId: "08450477fc954800cd94721203974f25") {
@@ -68,7 +68,7 @@ To get a book from the bookId execute the query:
 
 ### Update a book
 
-To update the book data execute de mutation:
+To update a book data, execute de mutation:
 
     mutation UpdateBook {
         updateBook(
@@ -85,7 +85,7 @@ Note that every field is required since the api overwrites the bookId with the n
 
 ### Delete a book
 
-To delete a book execute the mutation:
+To delete a book, execute the mutation:
 
     mutation MyMutation {
         deleteBook(
@@ -95,7 +95,7 @@ To delete a book execute the mutation:
 
 ### (Additional) List books
 
-Bonus Track: To list the books in the table execute the query:
+Bonus Track: To list the books in the table, execute the query:
 
     query ListBooks {
         listBooks(limit: 2) {

@@ -1,11 +1,6 @@
 component: graphql
 name: books-api
 
-variablesResolutionMode: 20210326
-
-provider:
-  name: aws
-
 inputs:
   name: ${name}-${stage}
   src: ./
