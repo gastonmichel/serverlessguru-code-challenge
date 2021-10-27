@@ -1,31 +1,124 @@
-# AWS AppSync API Development v2
+# AWS AppSync API to store Book Metadata
 
 ## The Challenge
 
-Build a Serverless Framework API with AWS AppSync which supports CRUD functionality (Create, Read, Update, Delete) *don't use mapping templates directly to DynamoDB from AppSync and use GitHub Actions CI/CD pipeline, AWS CodePipeline, or Serverless Pro CI/CD.
+Build a Serverless Framework API with AWS AppSync which supports CRUD functionality (Create, Read, Update, Delete) *don't use mapping templates directly to DynamoDB from AppSync and use GitHub Actions CI/CD pipeline, AWS CodePipeline, or Serverless Pro CI/CD. The CI/CD should trigger a deployment based on a git push to the master branch which goes through and deploys the backend Serverless Framework API.
 
-You can take screenshots of the CI/CD setup and include them in the README.
+## The Framework
 
-The CI/CD should trigger a deployment based on a git push to the master branch which goes through and deploys the backend Serverless Framework API.
+I choose Serverless Components to implement the Infrastructure As Code. It had a few challenges and hicups but is mostly stable and the project resulted well-organized and readable.
 
-### Requirements
+### Folder Structure
 
-1. All AWS Infrastructure needs to be automated with IAC using Serverless Framework and CloudFormation as needed
+Each folder contains a Serverless Component. The database folder provides the DynamoDB book-table. The iam-role-* folders describes the lambda execution roles. There are two roles, one for read/scan the table and the other to write in the table, in order to satisfy the least-privileged principle up to the read/write degree (more granularity could be added in later stage). The lambda-* folders provides the CRUD functionality and access the book-table. The api folder describes the graphql schema and link the resolvers to each lambda function.
 
-2. The AppSync API should store data in DynamoDB
+Every component is tied up through references using serverless component environmental variables.
 
-3. There should be 4-5 lambdas that include the following CRUD functionality (Create, Read, Update, Delete) *don't use mapping templates directly to DynamoDB from AppSync
+## The CI/CD and the multi stage deployment
 
-3. Build the CI/CD pipeline to support multi-stage deployments
+The multi stage deployment is satisfied by naming every component with a stage suffix. Therefore, multiple stages can coexist in the same AWS account and region. This is a choice made for credentials simplicity sake, but multiple accounts could be implemented in a later stage.
 
-4. The template should be fully working and documented
+The CI/CD engine chosen is Github Actions, that on any commit to the branches 'main' and 'dev' deploys the entire stack with the stage name equal to the branch name. The CI/CD is executed with personal https://app.serverless.com/ access key injected via repo environment secret. 
 
-4. A public GitHub repository must be shared with frequent commits
+## Endpoint and authentication
 
-5. A video should be recorded (www.loom.com) of you talking over the application code, IAC, and any additional areas you want to highlight in your solution to demonstrate additional skills
+For every stage there is an endpoint that points to the graphql api:
 
-Please spend only what you consider a reasonable amount of time for this.
+    http://main.gastonmichel.com.ar/graphql
 
-## Optionally
+    http://dev.gastonmichel.com.ar/graphql
 
-Create a frontend with ReactJS and Material UI which uses the Amplify library to connect to your AppSync API for the CRUD functionality.
+Custom domain is implemented in order to be resilient to destroy and redeploy the appsync api.
+
+The authentication is through api key, that is implemented adding a header 'x-api-key' in the request. The api-key is provided privately and expires in 7 days.
+
+## The CRUD functionality
+
+### Create a book
+
+In order to Create a book execute the mutation:
+
+    mutation CreateBook {
+        createBook(
+            input: {
+                author: "William Shakespeare", 
+                description: "A classic", 
+                title: "Romeo and Juliet"
+            }
+        )
+    }
+
+### Read a book
+
+To get a book from the bookId execute the query: 
+
+    query GetBookById {
+    getBookById(bookId: "08450477fc954800cd94721203974f25") {
+        updatedAt
+        author
+        bookId
+        description
+        title
+    }
+    }
+
+### Update a book
+
+To update the book data execute de mutation:
+
+    mutation UpdateBook {
+        updateBook(
+            bookId: "08450477fc954800cd94721203974f25", 
+            input: {
+                author: "Robert Kiyosaki", 
+                description: "Updated Description", 
+                title: "Rich Dad Poor Dad"
+            }
+        )
+    }
+
+Note that every field is required since the api overwrites the bookId with the new data.
+
+### Delete a book
+
+To delete a book execute the mutation:
+
+    mutation MyMutation {
+        deleteBook(
+            bookId: "59aa11d7a5f8df82be9498d05018b9ce"
+        )
+    }
+
+### (Additional) List books
+
+Bonus Track: To list the books in the table execute the query:
+
+    query ListBooks {
+        listBooks(limit: 2) {
+            books {
+                author
+                bookId
+                description
+                title
+                updatedAt
+                }
+            nextToken
+        }
+    }
+
+The query will return a nextToken that can be passed in the next query in order to get the next 'limit' number of items:
+
+    query ListBooksNextToken {
+        listBooks(limit: 2, token: "08450477fc954800cd94721203974f25") {
+            books {
+                author
+                bookId
+                description
+                title
+                updatedAt
+                }
+            nextToken
+        }
+    }
+    
+That way the data get paginated and the scan operations are prevented from being too long.
