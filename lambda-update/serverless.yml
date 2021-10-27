@@ -2,7 +2,7 @@ component: aws-lambda
 name: update-book
 
 inputs:
-  src: ./
+  src: ./src
   name: ${name}-${stage}
   description: Update a books in the book table
   memory: 512

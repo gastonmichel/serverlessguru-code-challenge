@@ -9,7 +9,7 @@ provider:
 inputs:
   name: ${name}-${stage}
   src: ./
-  domain: ${stage}.books.gastonmichel.com.ar
+  domain: ${stage}.gastonmichel.com.ar
   resolvers:
     Query:
       getBookById:                      

@@ -2,7 +2,7 @@ component: aws-lambda
 name: list-books
 
 inputs:
-  src: ./
+  src: ./src
   name: ${name}-${stage}
   description: List books from the book table
   memory: 512

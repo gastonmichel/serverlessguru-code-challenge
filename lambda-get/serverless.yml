@@ -2,7 +2,7 @@ component: aws-lambda
 name: get-book
 
 inputs:
-  src: ./
+  src: ./src
   name: ${name}-${stage}
   description: Get a book from the book table
   memory: 512
