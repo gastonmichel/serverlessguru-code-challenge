@@ -26,6 +26,7 @@ For every stage there is an endpoint that points to the graphql api:
 
     http://main.gastonmichel.com.ar/graphql
 
+
     http://dev.gastonmichel.com.ar/graphql
 
 Custom domain is implemented in order to be resilient to destroy and redeploy the appsync api.
