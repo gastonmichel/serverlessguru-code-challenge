@@ -20,4 +20,5 @@ jobs:
       uses: actions/checkout@v2
     - name: serverless deploy --stage ${{ steps.vars.outputs.stage }}
       uses: serverless/github-action@master
-      run: serverless deploy --stage ${{ steps.vars.outputs.stage }}
+      with:
+        args: serverless deploy --stage ${{ steps.vars.outputs.stage }}
