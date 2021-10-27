@@ -23,9 +23,9 @@ input BookInput {
 }
 
 type Mutation {
-  createBook(input: BookInput): Boolean
+  createBook(input: BookInput): ID!
   deleteBook(bookId: ID!): Boolean
-  updateBook(bookId: ID!, input: BookInput!): Boolean
+  updateBook(bookId: ID!, input: BookInput!): ID!
 }
 
 schema {
