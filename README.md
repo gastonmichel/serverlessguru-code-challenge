@@ -10,7 +10,7 @@ I choose Serverless Components to implement the Infrastructure As Code. It had a
 
 ### Folder Structure
 
-Each folder contains a Serverless Component. The database folder provides the DynamoDB book-table. The iam-role-* folders describes the lambda execution roles. There are two roles, one for read/scan the table and the other to write in the table, in order to satisfy the least-privileged principle up to the read/write degree (more granularity could be added in later stage). The lambda-* folders provides the CRUD functionality and access the book-table. The api folder describes the graphql schema and link the resolvers to each lambda function.
+Each folder contains a Serverless Component. The `database` folder provides the DynamoDB book-table. The `iam-role-*` folders describes the lambda execution roles. There are two roles, one for read/scan the table and the other to write in the table, in order to satisfy the least-privileged principle up to the read/write degree (more granularity could be added in later stage). The `lambda-*` folders provides the CRUD functionality and access the book-table. The `api` folder describes the graphql schema and link the resolvers to each lambda function.
 
 Every component is tied up through references using serverless component environmental variables.
 
@@ -110,7 +110,7 @@ Bonus Track: To list the books in the table, execute the query:
         }
     }
 
-The query will return a nextToken that can be passed in the next query in order to get the next 'limit' number of items:
+The query will return a nextToken that can be passed in the next query in order to get the next `limit` number of items:
 
     query ListBooksNextToken {
         listBooks(limit: 2, token: "08450477fc954800cd94721203974f25") {
