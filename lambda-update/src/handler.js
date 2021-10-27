@@ -14,6 +14,5 @@ module.exports.handler = async (event, context) => {
             },
         })
         .promise()
-    return true
-    
+    return event.bookId
 }
