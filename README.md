@@ -34,7 +34,7 @@ The dev stage endpoint:
 
 Custom domain is implemented in order to be resilient to destruction and redeployment of the AWS AppSync api.
 
-The authentication is through api key, that is implemented adding a header `x-api-key` in the request. The api-key is provided privately and expires in 7 days.
+The authentication is through api key. The api-key is provided privately and expires in 7 days. Add a header `x-api-key` in the request in order to be authenticated. 
 
 ## The CRUD functionality
 
