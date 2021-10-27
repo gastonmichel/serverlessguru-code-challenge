@@ -24,8 +24,11 @@ The CI/CD engine chosen is Github Actions, that on any commit to the branches 'm
 
 For every stage there is an endpoint that points to the graphql api:
 
+The main stage endpoint:
+
     http://main.gastonmichel.com.ar/graphql
 
+The dev stage endpoint:
 
     http://dev.gastonmichel.com.ar/graphql
 
