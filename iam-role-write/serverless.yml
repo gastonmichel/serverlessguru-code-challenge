@@ -1,0 +1,22 @@
+component: aws-iam-role
+name: book-table-iam-write
+
+inputs:
+  name: ${name}-${stage}
+  region: us-east-1
+  service: lambda.amazonaws.com
+  policy:
+    # AWS Lambda function containing Express Logs and Assume Role access
+    - Effect: Allow
+      Action:
+        - logs:CreateLogGroup
+        - logs:CreateLogStream
+        - logs:PutLogEvents
+      Resource: "*"
+    # AWS DynamoDB Table access
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:DeleteItem
+      Resource:
+        - ${output:books-table.arn}

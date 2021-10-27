@@ -1,5 +1,5 @@
 component: aws-iam-role
-name: book-table-iam
+name: book-table-iam-read
 
 inputs:
   name: ${name}-${stage}
@@ -9,7 +9,6 @@ inputs:
     # AWS Lambda function containing Express Logs and Assume Role access
     - Effect: Allow
       Action:
-        - sts:AssumeRole
         - logs:CreateLogGroup
         - logs:CreateLogStream
         - logs:PutLogEvents
@@ -19,7 +18,5 @@ inputs:
       Action:
         - dynamodb:Scan
         - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:DeleteItem
       Resource:
         - ${output:books-table.arn}
