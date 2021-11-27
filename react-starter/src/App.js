@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
 import imageHero from './images/hero.png';
 
-import { Container, Item, ButtonGroup, Fab, Typography, Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Modal, Button, TextField, Paper, AppBar, Toolbar, IconButton, Stack, Grid } from '@material-ui/core';
+import { Card, CardContent, CardHeader, Container, Item, ButtonGroup, Fab, Typography, Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Modal, Button, TextField, Paper, AppBar, Toolbar, IconButton, Stack, Grid } from '@material-ui/core';
 
 import AddIcon from '@mui/icons-material/Add';
+
+
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
 
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import awsconfig from './aws-exports';
@@ -39,7 +35,6 @@ export default class App extends Component {
 
     this.state.books = []
   }
-
 
   async componentDidMount() {
     const { data } = await API.graphql(graphqlOperation(queries.listBooks))
@@ -70,53 +65,62 @@ export default class App extends Component {
 
           </Grid>
           <Grid item xs={8} >
-            <Paper elevation={3}>
-              <Stack>
-                <Item>
-                  <Typography variant='h5' >Book Table</Typography>
-                </Item>
-                <Item>
-                  <Container>
-                    <TableContainer>
-                      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                          <TableRow>
-                            <TableCell><Typography variant='h6'>Author</Typography></TableCell>
-                            <TableCell><Typography variant='h6'>Title</Typography></TableCell>
-                            <TableCell><Typography variant='h6'>Description</Typography></TableCell>
-                            <TableCell><Typography variant='h6'>Actions</Typography></TableCell>
-                          </TableRow>
-                        </TableHead>
+            <Card>
+              <CardHeader
+                title="Book Table"
+                subheader="Here you can store your books"
+                style={{
+                  margin: 30,
+                }}
+              />
+              <CardContent>
+                <Container>
+                  <TableContainer>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell><Typography variant='h6'>Author</Typography></TableCell>
+                          <TableCell><Typography variant='h6'>Title</Typography></TableCell>
+                          <TableCell><Typography variant='h6'>Description</Typography></TableCell>
+                          <TableCell><Typography variant='h6'>Actions</Typography></TableCell>
+                        </TableRow>
+                      </TableHead>
 
-                        <TableBody>
-                          {this.state.books.map(book => (
-                            <TableRow key={book.bookId}>
-                              <TableCell>{book.author}</TableCell>
-                              <TableCell>{book.title}</TableCell>
-                              <TableCell>{book.description}</TableCell>
-                              <TableCell>
-                                <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                                  <Button><RemoveRedEyeIcon /></Button>
-                                  <Button><ModeEditIcon /></Button>
-                                  <Button><DeleteOutlineIcon /></Button>
-                                </ButtonGroup>
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  </Container>
-                </Item>
-              </Stack>
-            </Paper>
+                      <TableBody>
+                        {this.state.books.map(book => (
+                          <TableRow key={book.bookId}>
+                            <TableCell>{book.author}</TableCell>
+                            <TableCell>{book.title}</TableCell>
+                            <TableCell>{book.description}</TableCell>
+                            <TableCell>
+                              <ButtonGroup variant="contained" color='secondary'>
+                                <Button><RemoveRedEyeIcon /></Button>
+                                <Button><ModeEditIcon /></Button>
+                                <Button><DeleteOutlineIcon /></Button>
+                              </ButtonGroup>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Container>
+              </CardContent>
+            </Card>
           </Grid>
           <Grid>
-            <Fab color="primary" aria-label="add">
-              <AddIcon />
-            </Fab>
           </Grid>
         </Grid>
+        <Fab color="primary" aria-label="add" style={{
+          margin: 0,
+          top: 'auto',
+          right: 40,
+          bottom: 40,
+          left: 'auto',
+          position: 'fixed',
+        }}>
+          <AddIcon />
+        </Fab>
       </div>
     );
   }
