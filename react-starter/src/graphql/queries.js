@@ -1,4 +1,7 @@
-export const getBookById = `query GetBookById {
+import gql from 'graphql-tag';
+
+export const getBookById = gql`
+query GetBookById ($bookId: ID!) {
     getBookById(bookId: $bookId) {
         updatedAt
         author
@@ -8,16 +11,15 @@ export const getBookById = `query GetBookById {
     }
 }
 `
-export const listBooks = `query ListBooks {
+export const listBooks = gql`
+query ListBooks {
     listBooks(limit: 10) {
         books {
             author
             bookId
             description
             title
-            updatedAt
             }
-        nextToken
     }
 }
 `

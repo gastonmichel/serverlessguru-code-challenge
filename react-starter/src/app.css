@@ -1,7 +1,0 @@
-@font-face {
-  font-family: 'serverless';
-  src: url('./fonts/serverless-regular.woff2') format('woff2'),
-    url('./fonts/serverless-regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
