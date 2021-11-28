@@ -1,4 +1,4 @@
-name: react-starter
+name: react-front
 component: website
 
 inputs:
@@ -6,3 +6,4 @@ inputs:
     src: ./src
     hook: npm run build
     dist: ./dist
+  domain: front.gastonmichel.com.ar
